@@ -1,13 +1,20 @@
-const express = require("express");
+const express = require("express")
 
-const router = express.Router();
+const router = express.Router()
 
-const itemControllers = require("./controllers/itemControllers");
+const itemControllers = require("./controllers/itemControllers")
+const charactersControllers = require("./controllers/charactersControllers")
 
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
+router.get("/characters", charactersControllers.browse)
+router.get("/characters/:id", charactersControllers.read)
+router.put("/characters/:id", charactersControllers.edit)
+router.post("/characters", charactersControllers.add)
+router.delete("/characters/:id", charactersControllers.destroy)
 
-module.exports = router;
+router.get("/items", itemControllers.browse)
+router.get("/items/:id", itemControllers.read)
+router.put("/items/:id", itemControllers.edit)
+router.post("/items", itemControllers.add)
+router.delete("/items/:id", itemControllers.destroy)
+
+module.exports = router

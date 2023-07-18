@@ -1,7 +1,7 @@
 const models = require("../models")
 
 const browse = (req, res) => {
-  models.item
+  models.characters
     .findAll()
     .then(([rows]) => {
       res.send(rows)
@@ -11,9 +11,8 @@ const browse = (req, res) => {
       res.sendStatus(500)
     })
 }
-
 const read = (req, res) => {
-  models.item
+  models.characters
     .find(req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
@@ -27,15 +26,30 @@ const read = (req, res) => {
       res.sendStatus(500)
     })
 }
+const add = (req, res) => {
+  const characters = req.body
 
-const edit = (req, res) => {
-  const item = req.body
   // TODO validations (length, format...)
 
-  item.id = parseInt(req.params.id, 10)
+  models.characters
+    .insert(characters)
+    .then(([result]) => {
+      res.location(`/characters/${result.insertId}`).sendStatus(201)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.sendStatus(500)
+    })
+}
+const edit = (req, res) => {
+  const characters = req.body
 
-  models.item
-    .update(item)
+  // TODO validations (length, format...)
+
+  characters.id = parseInt(req.params.id, 10)
+
+  models.characters
+    .update(characters)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404)
@@ -49,24 +63,8 @@ const edit = (req, res) => {
     })
 }
 
-const add = (req, res) => {
-  const item = req.body
-
-  // TODO validations (length, format...)
-
-  models.item
-    .insert(item)
-    .then(([result]) => {
-      res.location(`/items/${result.insertId}`).sendStatus(201)
-    })
-    .catch((err) => {
-      console.error(err)
-      res.sendStatus(500)
-    })
-}
-
 const destroy = (req, res) => {
-  models.item
+  models.characters
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
@@ -80,11 +78,10 @@ const destroy = (req, res) => {
       res.sendStatus(500)
     })
 }
-
 module.exports = {
   browse,
   read,
-  edit,
   add,
+  edit,
   destroy,
 }

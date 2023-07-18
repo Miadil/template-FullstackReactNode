@@ -1,5 +1,5 @@
-import Counter from "../components/Counter";
-import logo from "../assets/logo.svg";
+import Counter from "../components/Counter"
+import logo from "../assets/logo.svg"
 
 export default function Home() {
   return (
@@ -7,7 +7,7 @@ export default function Home() {
       <img src={logo} className="App-logo" alt="logo" />
       <p>Hello Vite + React !</p>
 
-      <Counter />
+      <Counter poulet="je suis un poulet" />
 
       <p>
         Edit <code>App.jsx</code> and save to test HMR updates.
@@ -32,5 +32,5 @@ export default function Home() {
         </a>
       </p>
     </header>
-  );
+  )
 }
