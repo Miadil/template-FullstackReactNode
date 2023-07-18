@@ -1,36 +1,23 @@
-import Counter from "../components/Counter";
-import logo from "../assets/logo.svg";
+import { useState, useEffect } from "react"
+import axios from "axios"
 
 export default function Home() {
+  const [characters, setCharacters] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/characters")
+      .then((res) => setCharacters(res.data))
+  }, [])
+
   return (
     <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>Hello Vite + React !</p>
-
-      <Counter />
-
-      <p>
-        Edit <code>App.jsx</code> and save to test HMR updates.
-      </p>
-      <p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        {" | "}
-        <a
-          className="App-link"
-          href="https://vitejs.dev/guide/features.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Vite Docs
-        </a>
-      </p>
+      {characters.map((character) => (
+        <>
+          <img src={character.imgUrl} alt={character.name} />
+          <p>{character.firstname}</p>
+        </>
+      ))}
     </header>
-  );
+  )
 }
